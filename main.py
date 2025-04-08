@@ -21,10 +21,10 @@ app = FastAPI()
 async def upload_csv(file: UploadFile = File(...)):
     if not file.filename.endswith(".csv"):
         return {"error": "Only CSV files are allowed"}
-    # Read the file content
+
     contents = await file.read()
 
-    # Use io.BytesIO to turn the bytes into a file-like object
+
     df = pd.read_csv(io.BytesIO(contents))
     message = preprocessing.df_preprocess(df)
     return {"message": message}
